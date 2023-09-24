@@ -4,7 +4,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:imran_ipa/common/custom_rounded_button.dart';
 import 'package:imran_ipa/common/profile_picture.dart';
 import 'package:imran_ipa/common/rounded_image_card.dart';
+import 'package:imran_ipa/providers/page_route_provider.dart';
+import 'package:imran_ipa/utils/constants.dart';
 import 'package:imran_ipa/utils/style_sheet.dart';
+import 'package:provider/provider.dart';
 
 class CustomizationScreen extends StatelessWidget {
   const CustomizationScreen({super.key});
@@ -25,45 +28,58 @@ class CustomizationScreen extends StatelessWidget {
           ),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
-            child: DottedBorder(
-              borderType: BorderType.RRect,
-              color: hexToColor("#CDDAEA"),
-              radius: const Radius.circular(8),
-              padding: const EdgeInsets.all(6),
-              child: ClipRRect(
-                borderRadius: const BorderRadius.all(Radius.circular(8)),
-                child: Container(
-                  height: 40,
-                  width: double.maxFinite,
-                  color: hexToColor("#F6FAFF"),
-                  child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        FaIcon(
-                          FontAwesomeIcons.image,
-                          color: hexToColor("#456EFF"),
-                        ),
-                        const SizedBox(
-                          width: 10,
-                        ),
-                        const Text(
-                          "Change picture here and adjust",
-                          style: TextStyle(fontSize: 16),
-                        )
-                      ]),
+            child: InkWell(
+              onTap: () {
+                Provider.of<PageRouteProvider>(context, listen: false)
+                    .setEditCardState();
+              },
+              child: DottedBorder(
+                borderType: BorderType.RRect,
+                color: hexToColor("#CDDAEA"),
+                radius: const Radius.circular(8),
+                padding: const EdgeInsets.all(6),
+                child: ClipRRect(
+                  borderRadius: const BorderRadius.all(Radius.circular(8)),
+                  child: Container(
+                    height: 40,
+                    width: double.maxFinite,
+                    color: hexToColor("#F6FAFF"),
+                    child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          FaIcon(
+                            FontAwesomeIcons.image,
+                            color: hexToColor("#456EFF"),
+                          ),
+                          const SizedBox(
+                            width: 10,
+                          ),
+                          const Text(
+                            "Change picture here and adjust",
+                            style: TextStyle(fontSize: 16),
+                          )
+                        ]),
+                  ),
                 ),
               ),
             ),
           ),
           SizedBox(
               height: MediaQuery.of(context).size.height * 0.65,
+              //width: double.maxFinite,
               child: Stack(
                 children: [
-                  SizedBox(
+                  Container(
+                    padding: const EdgeInsets.symmetric(horizontal: 10),
                     height: MediaQuery.of(context).size.height * 0.6,
-                    child: const RoundedImageCard(imagePath: ""),
+                    width: double.maxFinite,
+                    child: RoundedImageCard(
+                      imagePath: imgLink,
+                      isNetworkImage: true,
+                    ),
                   ),
                   Container(
+                    // color: Colors.green,
                     width: double.maxFinite,
                     padding: const EdgeInsets.only(
                         top: 35, bottom: 10, left: 5, right: 5),
@@ -73,34 +89,46 @@ class CustomizationScreen extends StatelessWidget {
                         Column(
                           children: [
                             ProfilePicture(
-                              name: "Amir",
-                              imagePath: "",
+                              name: "Corleone",
+                              imagePath: profImg,
                             ),
                             const Text(
                               "Alexandra",
                               style: TextStyle(
-                                  fontSize: 36, fontWeight: FontWeight.w600),
+                                fontSize: 36,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
                             ),
                             const Text(
                               "Stanton",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(
                               height: 30,
                             ),
                             const Text(
                               "Realtor | VP Design",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
                             ),
                             const Text(
                               "Bangalore, India",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),

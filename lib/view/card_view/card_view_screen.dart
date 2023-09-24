@@ -5,6 +5,7 @@ import 'package:imran_ipa/common/glass_container.dart';
 import 'package:imran_ipa/common/profile_picture.dart';
 import 'package:imran_ipa/common/rounded_image_card.dart';
 import 'package:imran_ipa/providers/page_route_provider.dart';
+import 'package:imran_ipa/utils/constants.dart';
 import 'package:imran_ipa/utils/style_sheet.dart';
 import 'package:provider/provider.dart';
 
@@ -31,7 +32,10 @@ class CardViewScreen extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.75,
-                    child: const RoundedImageCard(imagePath: ""),
+                    child: RoundedImageCard(
+                      imagePath: "",
+                      isNetworkImage: true,
+                    ),
                   ),
                   Container(
                     padding: const EdgeInsets.only(
@@ -42,34 +46,46 @@ class CardViewScreen extends StatelessWidget {
                         Column(
                           children: [
                             ProfilePicture(
-                              name: "Amir",
-                              imagePath: "",
+                              name: "Corleone",
+                              imagePath: profImg,
                             ),
                             const Text(
                               "Alexandra",
                               style: TextStyle(
-                                  fontSize: 36, fontWeight: FontWeight.w600),
+                                fontSize: 36,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
                             ),
                             const Text(
                               "Stanton",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(
                               height: 30,
                             ),
                             const Text(
                               "Realtor | VP Design",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
                             ),
                             const Text(
                               "Bangalore, India",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
                             ),
                           ],
                         ),
@@ -87,23 +103,34 @@ class CardViewScreen extends StatelessWidget {
                                 children: [
                                   GlassContainer(
                                       size: bigIconSize,
-                                      child:
-                                          const FaIcon(FontAwesomeIcons.skype)),
+                                      child: const FaIcon(
+                                        FontAwesomeIcons.skype,
+                                        color: Colors.white,
+                                      )),
                                   GlassContainer(
                                       size: bigIconSize,
-                                      child: const Icon(Icons.mail_rounded)),
-                                  GlassContainer(
-                                      size: bigIconSize,
-                                      child:
-                                          const FaIcon(FontAwesomeIcons.phone)),
+                                      child: const Icon(
+                                        Icons.mail_rounded,
+                                        color: Colors.white,
+                                      )),
                                   GlassContainer(
                                       size: bigIconSize,
                                       child: const FaIcon(
-                                          FontAwesomeIcons.locationPin)),
+                                        FontAwesomeIcons.phone,
+                                        color: Colors.white,
+                                      )),
                                   GlassContainer(
                                       size: bigIconSize,
-                                      child:
-                                          const FaIcon(FontAwesomeIcons.globe)),
+                                      child: const FaIcon(
+                                        FontAwesomeIcons.locationPin,
+                                        color: Colors.white,
+                                      )),
+                                  GlassContainer(
+                                      size: bigIconSize,
+                                      child: const FaIcon(
+                                        FontAwesomeIcons.globe,
+                                        color: Colors.white,
+                                      )),
                                 ],
                               ),
                             ),
@@ -126,7 +153,7 @@ class CardViewScreen extends StatelessWidget {
                                           style: TextStyle(
                                             fontStyle: FontStyle.italic,
                                             fontSize: 18.0,
-                                            color: Colors.black,
+                                            color: Colors.white,
                                           ),
                                         ),
                                         TextSpan(
@@ -134,7 +161,7 @@ class CardViewScreen extends StatelessWidget {
                                           style: TextStyle(
                                             fontWeight: FontWeight.w600,
                                             fontSize: 24.0,
-                                            color: Colors.black,
+                                            color: Colors.white,
                                           ),
                                         ),
                                       ],
@@ -147,11 +174,17 @@ class CardViewScreen extends StatelessWidget {
                                           child: const Icon(
                                             Icons.person,
                                             size: 12,
+                                            color: Colors.white,
                                           )),
                                       const SizedBox(
                                         width: 5,
                                       ),
-                                      const Text('Profile')
+                                      const Text(
+                                        'Profile',
+                                        style: TextStyle(
+                                          color: Colors.white,
+                                        ),
+                                      )
                                     ],
                                   )
                                 ],

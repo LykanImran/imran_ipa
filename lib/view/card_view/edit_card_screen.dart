@@ -5,6 +5,7 @@ import 'package:imran_ipa/common/profile_picture.dart';
 import 'package:imran_ipa/common/round_container.dart';
 import 'package:imran_ipa/common/rounded_image_card.dart';
 import 'package:imran_ipa/providers/page_route_provider.dart';
+import 'package:imran_ipa/utils/constants.dart';
 import 'package:imran_ipa/utils/style_sheet.dart';
 import 'package:provider/provider.dart';
 
@@ -29,7 +30,10 @@ class EditCardScreen extends StatelessWidget {
                 children: [
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.75,
-                    child: const RoundedImageCard(imagePath: ""),
+                    child: RoundedImageCard(
+                      imagePath: imgLink,
+                      isNetworkImage: true,
+                    ),
                   ),
                   Container(
                     width: double.maxFinite,
@@ -44,8 +48,8 @@ class EditCardScreen extends StatelessWidget {
                             Stack(
                               children: [
                                 ProfilePicture(
-                                  name: "Amir",
-                                  imagePath: "",
+                                  name: "Corleone",
+                                  imagePath: profImg,
                                 ),
                                 Positioned(
                                     bottom: -1,
@@ -68,14 +72,20 @@ class EditCardScreen extends StatelessWidget {
                             const Text(
                               "Alexandra",
                               style: TextStyle(
-                                  fontSize: 36, fontWeight: FontWeight.w600),
+                                fontSize: 36,
+                                fontWeight: FontWeight.w600,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(
                               height: 5,
                             ),
                             const Text(
                               "Stanton",
-                              style: TextStyle(fontSize: 20),
+                              style: TextStyle(
+                                fontSize: 20,
+                                color: Colors.white,
+                              ),
                             ),
                             const SizedBox(
                               height: 30,
@@ -86,10 +96,12 @@ class EditCardScreen extends StatelessWidget {
                     ),
                   ),
                   Positioned(
-                    right: 20,
+                    right: 35,
                     top: 15,
                     child: ElevatedButton(
                       onPressed: () {
+                        Provider.of<PageRouteProvider>(context, listen: false)
+                            .setCustomisationState();
                         // Add your onPressed logic here
                       },
                       style: ElevatedButton.styleFrom(
@@ -136,7 +148,7 @@ class EditCardScreen extends StatelessWidget {
                 text: "Save",
                 onPressed: () {
                   Provider.of<PageRouteProvider>(context, listen: false)
-                      .setCustomisationState();
+                      .setCardViewState();
                 },
                 color: hexToColor("#E72D38"),
                 isElevated: true,
