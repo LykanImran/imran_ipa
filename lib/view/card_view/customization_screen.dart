@@ -1,21 +1,68 @@
+import 'dart:math';
+
 import 'package:dotted_border/dotted_border.dart';
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:imran_ipa/common/custom_rounded_button.dart';
 import 'package:imran_ipa/common/profile_picture.dart';
-import 'package:imran_ipa/common/rounded_image_card.dart';
 import 'package:imran_ipa/providers/page_route_provider.dart';
 import 'package:imran_ipa/utils/constants.dart';
 import 'package:imran_ipa/utils/style_sheet.dart';
+import 'package:photo_view/photo_view.dart';
 import 'package:provider/provider.dart';
 
-class CustomizationScreen extends StatelessWidget {
+class CustomizationScreen extends StatefulWidget {
   const CustomizationScreen({super.key});
+
+  @override
+  State<CustomizationScreen> createState() => _CustomizationScreenState();
+}
+
+const double min = pi * -2;
+const double max = pi * 2;
+
+const double minScale = 0.03;
+const double defScale = 0.1;
+const double maxScale = 0.6;
+
+class _CustomizationScreenState extends State<CustomizationScreen> {
+  late PhotoViewControllerBase controller;
+  late PhotoViewScaleStateController scaleStateController;
+  int calls = 0;
+
+  @override
+  void initState() {
+    controller = PhotoViewController(initialScale: defScale)
+      ..outputStateStream.listen(onController);
+
+    scaleStateController = PhotoViewScaleStateController()
+      ..outputScaleStateStream.listen(onScaleState);
+    super.initState();
+  }
+
+  void onController(PhotoViewControllerValue value) {
+    setState(() {
+      calls += 1;
+    });
+  }
+
+  void onScaleState(PhotoViewScaleState scaleState) {
+    print(scaleState);
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    scaleStateController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     double bigIconSize = 30;
     double smallIconSize = 10;
+    double scale = 1.0;
+    Offset position = const Offset(0.0, 0.0);
     return Scaffold(
       appBar: AppBar(
         title: const Text("Customize Your Card"),
@@ -73,11 +120,27 @@ class CustomizationScreen extends StatelessWidget {
                     padding: const EdgeInsets.symmetric(horizontal: 10),
                     height: MediaQuery.of(context).size.height * 0.6,
                     width: double.maxFinite,
-                    child: RoundedImageCard(
-                      imagePath: imgLink,
-                      isNetworkImage: true,
+                    color: Colors.red,
+                    child: Center(
+                      child: PhotoView(
+                        imageProvider: NetworkImage(imgLink),
+                        minScale: PhotoViewComputedScale.contained,
+                        maxScale: PhotoViewComputedScale.covered * 2,
+                        backgroundDecoration: const BoxDecoration(
+                          color: Colors.black,
+                        ),
+                        controller: controller,
+                        scaleStateController: scaleStateController,
+                       // enableRotation: true,
+                      ),
                     ),
+                    // child: RoundedImageCard(
+                    //   imagePath: imgLink,
+                    //   isNetworkImage: true,
+                    // ),
                   ),
+
+                  /////
                   Container(
                     // color: Colors.green,
                     width: double.maxFinite,
