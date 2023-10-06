@@ -39,7 +39,6 @@ class _PageSelectorState extends State<PageSelector> {
         return const CardViewScreen();
       case RouteStatus.EditCard:
         return const EditCardScreen();
-
       case RouteStatus.Customisation:
         return const CustomizationScreen();
       default:
