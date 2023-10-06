@@ -77,6 +77,7 @@ class ApiManager {
             data: FormData.fromMap(params),
             options: Options(headers: {
               'Authorization': ' Bearer $token',
+              'Content-Type': 'multipart/form-data'
               //'Authorization': token,
               // 'Content-Type': 'application/json'
             }), onSendProgress: (sent, total) {
