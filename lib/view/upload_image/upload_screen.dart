@@ -1,14 +1,10 @@
-import 'dart:io';
-
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
-import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:imran_ipa/common/custom_elevated_btn.dart';
 import 'package:imran_ipa/common/round_container.dart';
-import 'package:imran_ipa/providers/image_provider.dart';
-import 'package:imran_ipa/providers/page_route_provider.dart';
 import 'package:imran_ipa/utils/style_sheet.dart';
+import 'package:imran_ipa/view_model/upload_view_model.dart';
 import 'package:provider/provider.dart';
 
 class UploadScreen extends StatelessWidget {
@@ -16,61 +12,7 @@ class UploadScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    XFile? image;
-
-    Future<XFile> croppedImage() async {
-      CroppedFile? croppedFile = await ImageCropper().cropImage(
-        sourcePath: image!.path,
-        aspectRatioPresets: [
-          CropAspectRatioPreset.original,
-          CropAspectRatioPreset.square,
-          CropAspectRatioPreset.ratio3x2,
-          CropAspectRatioPreset.ratio4x3,
-          CropAspectRatioPreset.ratio16x9
-        ],
-        uiSettings: [
-          AndroidUiSettings(
-              toolbarTitle: 'Edit Photo',
-              toolbarColor: Colors.white,
-              //  statusBarColor: Colors.red,
-              toolbarWidgetColor: Colors.black,
-              // backgroundColor: Colors.yellow,
-              initAspectRatio: CropAspectRatioPreset.original,
-              lockAspectRatio: false),
-          IOSUiSettings(
-            title: 'Edit Photo',
-          ),
-          WebUiSettings(
-            context: context,
-          ),
-        ],
-      );
-
-      XFile tempFile = XFile(
-        croppedFile!.path,
-        bytes: await croppedFile.readAsBytes(),
-      );
-      return tempFile;
-    }
-
-    Future<void> _pickImage(ImageSource source) async {
-      final picker = ImagePicker();
-      final pickedImage = await picker.pickImage(source: source);
-      image = pickedImage;
-
-      if (pickedImage != null) {
-        debugPrint("Image Picked and Path is : ${pickedImage.path}");
-        //String path = croppedImage();
-        XFile tFile = await croppedImage();
-        debugPrint("B4 ImageProv");
-        Provider.of<ImgProvider>(context, listen: false)
-            .setPickedImage(tFile);
-        debugPrint("B4 Routing");
-
-        Provider.of<PageRouteProvider>(context, listen: false)
-            .setTemplateCardState();
-      }
-    }
+    final uploadView = Provider.of<UploadViewModel>(context);
 
     Future<void> _openImagePickerModal(BuildContext context) async {
       showModalBottomSheet<void>(
@@ -87,17 +29,13 @@ class UploadScreen extends StatelessWidget {
                     RoundContainer(
                         child: IconButton(
                       onPressed: () {
-                        _pickImage(ImageSource.camera);
+                        uploadView.pickImage(ImageSource.camera, context);
                         Navigator.pop(context);
                       },
                       icon: FaIcon(
                         FontAwesomeIcons.camera,
                         color: hexToColor("#E72D38"),
                       ),
-                      // icon: Icon(
-                      //   Icons.camera,
-                      //   color: hexToColor("#E72D38"),
-                      // ),
                     )),
                     const SizedBox(
                       height: 5,
@@ -114,7 +52,8 @@ class UploadScreen extends StatelessWidget {
                     RoundContainer(
                         child: IconButton(
                             onPressed: () {
-                              _pickImage(ImageSource.gallery);
+                              uploadView.pickImage(
+                                  ImageSource.gallery, context);
                               Navigator.pop(context);
                             },
                             icon: FaIcon(

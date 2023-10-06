@@ -1,5 +1,5 @@
 class PostCardModel {
-  String? profileBannerImageURL;
+  late final String? profileBannerImageURL;
 
   PostCardModel({this.profileBannerImageURL});
 

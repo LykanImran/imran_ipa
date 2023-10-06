@@ -3,6 +3,8 @@ import 'package:imran_ipa/home_page.dart';
 import 'package:imran_ipa/providers/image_provider.dart';
 import 'package:imran_ipa/providers/page_route_provider.dart';
 import 'package:imran_ipa/providers/upload_progress_provider.dart';
+import 'package:imran_ipa/view_model/template_card_view_model.dart';
+import 'package:imran_ipa/view_model/upload_view_model.dart';
 import 'package:provider/provider.dart';
 
 void main() {
@@ -14,6 +16,8 @@ void main() {
         ChangeNotifierProvider(create: (_) => PageRouteProvider()),
         ChangeNotifierProvider(create: (_) => ImgProvider()),
         ChangeNotifierProvider(create: (_) => UploadProgressProvider()),
+        ChangeNotifierProvider(create: (_) => TemplateCardViewModel()),
+        ChangeNotifierProvider(create: (_) => UploadViewModel()),
       ],
       child: const MyApp(),
     ),
